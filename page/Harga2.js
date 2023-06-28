@@ -1148,12 +1148,11 @@ export default function Harga2() {
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
             />
-            {
-                data.map((d) => {
-                    return
-
-                })
-            }
+            <View style={{ position: 'absolute', bottom: 10, width: '100%' }}>
+                <View style={{ backgroundColor: '#1B77DF', marginHorizontal: 20 }}>
+                    <Text>Floating</Text>
+                </View>
+            </View>
         </View>
     )
 }
