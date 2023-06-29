@@ -1541,7 +1541,7 @@ export default function Harga2() {
                 <TouchableOpacity onPress={handlePresentModalPress1} style={{ backgroundColor: '#004492', height: 45, flex: 1, padding: 5, borderTopLeftRadius: 30, borderBottomLeftRadius: 30 }}>
                     <View style={{ flexDirection: 'row' }}>
                         <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', alignContent: 'center', flex: 1 }}>
-                            <Image source={require('./../assets/star.svg')} style={{ width: 15, height: 15, marginRight: 5 }} />
+                            <Image source={require('./../assets/biomass.svg')} style={{ width: 25, height: 25, marginHorizontal: 5 }} />
                         </View>
                         <View style={{ flex: 2 }}>
                             <Text style={{ color: 'white' }}>Size</Text>
@@ -1552,7 +1552,7 @@ export default function Harga2() {
                 <TouchableOpacity onPress={handlePresentModalPress2} style={{ backgroundColor: '#1B77DF', height: 45, flex: 2, padding: 10, borderTopRightRadius: 30, borderBottomRightRadius: 30 }}>
                     <View style={{ flexDirection: 'row' }}>
                         <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>
-                            <Image source={require('./../assets/star.svg')} style={{ width: 15, height: 15, marginRight: 5 }} />
+                            <Image source={require('./../assets/location.svg')} style={{ width: 25, height: 25, marginRight: 5 }} />
                         </View>
                         <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ color: 'white', fontWeight: 700 }}>{ selectedRegion == "" ? "Indonesia" : selectedRegion }</Text>
