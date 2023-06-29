@@ -1,5 +1,11 @@
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image } from 'expo-image'
+import {
+    BottomSheetModal,
+    BottomSheetModalProvider,
+    BottomSheetBackdrop
+} from '@gorhom/bottom-sheet';
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 
 
 const element = (e) => {
@@ -1081,6 +1087,343 @@ export default function Harga2() {
         }
     }]);
 
+    const [regionList, setRegionList] = useState([
+        {
+            "id": "11",
+            "name": "ACEH",
+            "type": null,
+            "latitude": "4.69513500",
+            "longitude": "96.74939930",
+            "country_id": "ID",
+            "country_name": "Indonesia",
+            "country_name_uppercase": "INDONESIA",
+            "province_id": "11",
+            "province_name": "ACEH",
+            "regency_id": null,
+            "regency_name": null,
+            "district_id": null,
+            "district_name": null,
+            "village_id": null,
+            "village_name": null,
+            "full_name": "ACEH",
+            "name_translated": "ACEH",
+            "country_name_translated": "Indonesia",
+            "country_name_translated_uppercase": "INDONESIA"
+        },
+        {
+            "id": "12",
+            "name": "SUMATERA UTARA",
+            "type": null,
+            "latitude": "2.11535470",
+            "longitude": "99.54509740",
+            "country_id": "ID",
+            "country_name": "Indonesia",
+            "country_name_uppercase": "INDONESIA",
+            "province_id": "12",
+            "province_name": "SUMATERA UTARA",
+            "regency_id": null,
+            "regency_name": null,
+            "district_id": null,
+            "district_name": null,
+            "village_id": null,
+            "village_name": null,
+            "full_name": "SUMATERA UTARA",
+            "name_translated": "SUMATERA UTARA",
+            "country_name_translated": "Indonesia",
+            "country_name_translated_uppercase": "INDONESIA"
+        },
+        {
+            "id": "1212",
+            "name": "DELI SERDANG",
+            "type": null,
+            "latitude": "3.42018020",
+            "longitude": "98.70407500",
+            "country_id": "ID",
+            "country_name": "Indonesia",
+            "country_name_uppercase": "INDONESIA",
+            "province_id": "12",
+            "province_name": "SUMATERA UTARA",
+            "regency_id": "1212",
+            "regency_name": "DELI SERDANG",
+            "district_id": null,
+            "district_name": null,
+            "village_id": null,
+            "village_name": null,
+            "full_name": "SUMATERA UTARA, DELI SERDANG",
+            "name_translated": "DELI SERDANG",
+            "country_name_translated": "Indonesia",
+            "country_name_translated_uppercase": "INDONESIA"
+        },
+        {
+            "id": "1213",
+            "name": "LANGKAT",
+            "type": null,
+            "latitude": "3.86539160",
+            "longitude": "98.30884410",
+            "country_id": "ID",
+            "country_name": "Indonesia",
+            "country_name_uppercase": "INDONESIA",
+            "province_id": "12",
+            "province_name": "SUMATERA UTARA",
+            "regency_id": "1213",
+            "regency_name": "LANGKAT",
+            "district_id": null,
+            "district_name": null,
+            "village_id": null,
+            "village_name": null,
+            "full_name": "SUMATERA UTARA, LANGKAT",
+            "name_translated": "LANGKAT",
+            "country_name_translated": "Indonesia",
+            "country_name_translated_uppercase": "INDONESIA"
+        },
+        {
+            "id": "1218",
+            "name": "SERDANG BEDAGAI",
+            "type": null,
+            "latitude": "3.33716940",
+            "longitude": "99.05710890",
+            "country_id": "ID",
+            "country_name": "Indonesia",
+            "country_name_uppercase": "INDONESIA",
+            "province_id": "12",
+            "province_name": "SUMATERA UTARA",
+            "regency_id": "1218",
+            "regency_name": "SERDANG BEDAGAI",
+            "district_id": null,
+            "district_name": null,
+            "village_id": null,
+            "village_name": null,
+            "full_name": "SUMATERA UTARA, SERDANG BEDAGAI",
+            "name_translated": "SERDANG BEDAGAI",
+            "country_name_translated": "Indonesia",
+            "country_name_translated_uppercase": "INDONESIA"
+        },
+        {
+            "id": "1219",
+            "name": "BATU BARA",
+            "type": null,
+            "latitude": "3.17409790",
+            "longitude": "99.50061430",
+            "country_id": "ID",
+            "country_name": "Indonesia",
+            "country_name_uppercase": "INDONESIA",
+            "province_id": "12",
+            "province_name": "SUMATERA UTARA",
+            "regency_id": "1219",
+            "regency_name": "BATU BARA",
+            "district_id": null,
+            "district_name": null,
+            "village_id": null,
+            "village_name": null,
+            "full_name": "SUMATERA UTARA, BATU BARA",
+            "name_translated": "BATU BARA",
+            "country_name_translated": "Indonesia",
+            "country_name_translated_uppercase": "INDONESIA"
+        },
+        {
+            "id": "1271",
+            "name": "SIBOLGA",
+            "type": null,
+            "latitude": "1.73683710",
+            "longitude": "98.78511210",
+            "country_id": "ID",
+            "country_name": "Indonesia",
+            "country_name_uppercase": "INDONESIA",
+            "province_id": "12",
+            "province_name": "SUMATERA UTARA",
+            "regency_id": "1271",
+            "regency_name": "SIBOLGA",
+            "district_id": null,
+            "district_name": null,
+            "village_id": null,
+            "village_name": null,
+            "full_name": "SUMATERA UTARA, SIBOLGA",
+            "name_translated": "SIBOLGA",
+            "country_name_translated": "Indonesia",
+            "country_name_translated_uppercase": "INDONESIA"
+        },
+        {
+            "id": "1275",
+            "name": "MEDAN",
+            "type": null,
+            "latitude": "3.59519560",
+            "longitude": "98.67222270",
+            "country_id": "ID",
+            "country_name": "Indonesia",
+            "country_name_uppercase": "INDONESIA",
+            "province_id": "12",
+            "province_name": "SUMATERA UTARA",
+            "regency_id": "1275",
+            "regency_name": "MEDAN",
+            "district_id": null,
+            "district_name": null,
+            "village_id": null,
+            "village_name": null,
+            "full_name": "SUMATERA UTARA, MEDAN",
+            "name_translated": "MEDAN",
+            "country_name_translated": "Indonesia",
+            "country_name_translated_uppercase": "INDONESIA"
+        },
+        {
+            "id": "13",
+            "name": "SUMATERA BARAT",
+            "type": null,
+            "latitude": "-0.73993970",
+            "longitude": "100.80000510",
+            "country_id": "ID",
+            "country_name": "Indonesia",
+            "country_name_uppercase": "INDONESIA",
+            "province_id": "13",
+            "province_name": "SUMATERA BARAT",
+            "regency_id": null,
+            "regency_name": null,
+            "district_id": null,
+            "district_name": null,
+            "village_id": null,
+            "village_name": null,
+            "full_name": "SUMATERA BARAT",
+            "name_translated": "SUMATERA BARAT",
+            "country_name_translated": "Indonesia",
+            "country_name_translated_uppercase": "INDONESIA"
+        },
+        {
+            "id": "1302",
+            "name": "PESISIR SELATAN",
+            "type": null,
+            "latitude": "-1.72231470",
+            "longitude": "100.89030990",
+            "country_id": "ID",
+            "country_name": "Indonesia",
+            "country_name_uppercase": "INDONESIA",
+            "province_id": "13",
+            "province_name": "SUMATERA BARAT",
+            "regency_id": "1302",
+            "regency_name": "PESISIR SELATAN",
+            "district_id": null,
+            "district_name": null,
+            "village_id": null,
+            "village_name": null,
+            "full_name": "SUMATERA BARAT, PESISIR SELATAN",
+            "name_translated": "PESISIR SELATAN",
+            "country_name_translated": "Indonesia",
+            "country_name_translated_uppercase": "INDONESIA"
+        },
+        {
+            "id": "1306",
+            "name": "PADANG PARIAMAN",
+            "type": null,
+            "latitude": "-0.55467570",
+            "longitude": "100.21515780",
+            "country_id": "ID",
+            "country_name": "Indonesia",
+            "country_name_uppercase": "INDONESIA",
+            "province_id": "13",
+            "province_name": "SUMATERA BARAT",
+            "regency_id": "1306",
+            "regency_name": "PADANG PARIAMAN",
+            "district_id": null,
+            "district_name": null,
+            "village_id": null,
+            "village_name": null,
+            "full_name": "SUMATERA BARAT, PADANG PARIAMAN",
+            "name_translated": "PADANG PARIAMAN",
+            "country_name_translated": "Indonesia",
+            "country_name_translated_uppercase": "INDONESIA"
+        },
+        {
+            "id": "1371",
+            "name": "PADANG",
+            "type": null,
+            "latitude": "-0.94708320",
+            "longitude": "100.41718100",
+            "country_id": "ID",
+            "country_name": "Indonesia",
+            "country_name_uppercase": "INDONESIA",
+            "province_id": "13",
+            "province_name": "SUMATERA BARAT",
+            "regency_id": "1371",
+            "regency_name": "PADANG",
+            "district_id": null,
+            "district_name": null,
+            "village_id": null,
+            "village_name": null,
+            "full_name": "SUMATERA BARAT, PADANG",
+            "name_translated": "PADANG",
+            "country_name_translated": "Indonesia",
+            "country_name_translated_uppercase": "INDONESIA"
+        },
+        {
+            "id": "1377",
+            "name": "PARIAMAN",
+            "type": null,
+            "latitude": "-0.62565170",
+            "longitude": "100.12333960",
+            "country_id": "ID",
+            "country_name": "Indonesia",
+            "country_name_uppercase": "INDONESIA",
+            "province_id": "13",
+            "province_name": "SUMATERA BARAT",
+            "regency_id": "1377",
+            "regency_name": "PARIAMAN",
+            "district_id": null,
+            "district_name": null,
+            "village_id": null,
+            "village_name": null,
+            "full_name": "SUMATERA BARAT, PARIAMAN",
+            "name_translated": "PARIAMAN",
+            "country_name_translated": "Indonesia",
+            "country_name_translated_uppercase": "INDONESIA"
+        },
+        {
+            "id": "14",
+            "name": "RIAU",
+            "type": null,
+            "latitude": "0.29334690",
+            "longitude": "101.70682940",
+            "country_id": "ID",
+            "country_name": "Indonesia",
+            "country_name_uppercase": "INDONESIA",
+            "province_id": "14",
+            "province_name": "RIAU",
+            "regency_id": null,
+            "regency_name": null,
+            "district_id": null,
+            "district_name": null,
+            "village_id": null,
+            "village_name": null,
+            "full_name": "RIAU",
+            "name_translated": "RIAU",
+            "country_name_translated": "Indonesia",
+            "country_name_translated_uppercase": "INDONESIA"
+        },
+        {
+            "id": "1401",
+            "name": "KUANTAN SINGINGI",
+            "type": null,
+            "latitude": "-0.44115960",
+            "longitude": "101.52480550",
+            "country_id": "ID",
+            "country_name": "Indonesia",
+            "country_name_uppercase": "INDONESIA",
+            "province_id": "14",
+            "province_name": "RIAU",
+            "regency_id": "1401",
+            "regency_name": "KUANTAN SINGINGI",
+            "district_id": null,
+            "district_name": null,
+            "village_id": null,
+            "village_name": null,
+            "full_name": "RIAU, KUANTAN SINGINGI",
+            "name_translated": "KUANTAN SINGINGI",
+            "country_name_translated": "Indonesia",
+            "country_name_translated_uppercase": "INDONESIA"
+        }
+    ])
+    const [isSizeModal, setIsSizeModal] = useState(true)
+    const [bottomSheetOpened, setBottomSheetOpened] = useState(false)
+    const [sizeArr, setSizeArr] = useState([])
+    const [selectedSize, setSelectedSize] = useState(100)
+    const [selectedRegion, setSelectedRegion] = useState("")
     const iconUrl = (name) => { return "https://app.jala.tech/storage/" + name }
 
     const verifIcon = (bool) => {
@@ -1141,19 +1484,132 @@ export default function Harga2() {
         </View>
     );
 
+    // ref
+    const bottomSheetModalRef = useRef();
+
+    // variables
+    const snapPoints = useMemo(() => ['25%', '50%', '95%'], []);
+
+    // callbacks
+    function initArray(){
+        let temp = []
+        for (let i = 2; i < 21; i++) {
+            temp.push(i*10)
+        }
+        setSizeArr(temp)
+    }
+
+    const handlePresentModalPress1 = useCallback(() => {
+        setIsSizeModal(true)
+        initArray()
+        console.log(bottomSheetOpened)
+        bottomSheetModalRef.current?.present();
+        setBottomSheetOpened(true)
+    }, []);
+    const handleCloseModalPress1 = useCallback(() => {
+        setIsSizeModal(true)
+        initArray()
+        console.log(bottomSheetOpened)
+        bottomSheetModalRef.current?.close();
+        setBottomSheetOpened(false)
+    }, []);
+    const handlePresentModalPress2 = useCallback(() => {
+        setIsSizeModal(false)
+        bottomSheetModalRef.current?.present();
+        setBottomSheetOpened(true)
+    }, []);
+    const handleCloseModalPress2 = useCallback(() => {
+        setIsSizeModal(false)
+        bottomSheetModalRef.current?.close();
+        setBottomSheetOpened(true)
+    }, []);
+    const handleSheetChanges = useCallback((index) => {
+        console.log('handleSheetChanges', index);
+        if (index < 0){
+            setBottomSheetOpened(false)
+        }
+    }, []);
+
     return (
-        <View style={{ flex: 1 }}>
+        <BottomSheetModalProvider style={{ flex: 1 }}>
             <FlatList
                 data={data}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
             />
-            <View style={{ position: 'absolute', bottom: 10, width: '100%' }}>
-                <View style={{ backgroundColor: '#1B77DF', marginHorizontal: 20 }}>
-                    <Text>Floating</Text>
-                </View>
+            <View style={{ position: 'absolute', flexDirection: 'row', bottom: 10, paddingHorizontal: 20, width: '100%' }}>
+                <TouchableOpacity onPress={handlePresentModalPress1} style={{ backgroundColor: '#004492', height: 45, flex: 1, padding: 5, borderTopLeftRadius: 30, borderBottomLeftRadius: 30 }}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', alignContent: 'center', flex: 1 }}>
+                            <Image source={require('./../assets/star.svg')} style={{ width: 15, height: 15, marginRight: 5 }} />
+                        </View>
+                        <View style={{ flex: 2 }}>
+                            <Text style={{ color: 'white' }}>Size</Text>
+                            <Text style={{ color: 'white', fontWeight: 700 }}>{ selectedSize }</Text>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handlePresentModalPress2} style={{ backgroundColor: '#1B77DF', height: 45, flex: 2, padding: 10, borderTopRightRadius: 30, borderBottomRightRadius: 30 }}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>
+                            <Image source={require('./../assets/star.svg')} style={{ width: 15, height: 15, marginRight: 5 }} />
+                        </View>
+                        <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={{ color: 'white', fontWeight: 700 }}>{ selectedRegion == "" ? "Indonesia" : selectedRegion }</Text>
+                        </View>
+                    </View>
+                </TouchableOpacity>
             </View>
-        </View>
+            <BottomSheetModal
+                ref={bottomSheetModalRef}
+                index={2}
+                snapPoints={snapPoints}
+                onChange={handleSheetChanges}
+                backdropComponent={(backdropProps) => {
+                    <BottomSheetBackdrop {...backdropProps} opacity={0.25} />
+                }}
+            >
+                {
+                    isSizeModal ? 
+                    <View style={{  }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingVertical: 10, borderBottomColor: '#E9E9E9', borderBottomWidth: 1 }}>
+                            <Text style={{ fontWeight: 700 }}>Size</Text>
+                            <TouchableOpacity onPress={ handleCloseModalPress1 }>
+                                <Text style={{ color: '#1B77DF' }}>Tutup</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <ScrollView>
+                            {
+                                sizeArr.map((item) => {
+                                    return <TouchableOpacity key={item} onPress={ () => { setSelectedSize(item); handleCloseModalPress1() } } style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
+                                        <Text>{item}</Text>
+                                    </TouchableOpacity>
+                                })
+                            }
+                            <View style={{ height:40 }}></View>
+                        </ScrollView>
+                    </View> :
+                    <View style={{  }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingVertical: 10, borderBottomColor: '#E9E9E9', borderBottomWidth: 1 }}>
+                            <Text style={{ fontWeight: 700 }}>Region</Text>
+                            <TouchableOpacity onPress={ handleCloseModalPress2 }>
+                                <Text style={{ color: '#1B77DF' }}>Tutup</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <ScrollView>
+                            {
+                                regionList.map((item) => {
+                                    return <TouchableOpacity key={item.id} onPress={ () => { setSelectedRegion(item.full_name); handleCloseModalPress2() } } style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
+                                        <Text>{item.full_name}</Text>
+                                    </TouchableOpacity>
+                                })
+                            }
+                            <View style={{ height:40 }}></View>
+                        </ScrollView>
+                    </View>
+                }
+            </BottomSheetModal>
+        </BottomSheetModalProvider>
     )
 }
 
