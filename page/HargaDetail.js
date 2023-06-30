@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Linking, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { Image } from 'expo-image';
 
@@ -67,7 +67,24 @@ export default function HargaDetail({ route }) {
             <Text style={{ fontSize: 12, color: '#A09E9E' }}>Kontak </Text>
             <Text style={styles.title}>{item.creator.phone} </Text>
           </View>
-          <TouchableOpacity style={{ paddingVertical: 6, paddingHorizontal: 16, backgroundColor: '#1B77DF', borderRadius: 5 }}>
+          <TouchableOpacity onPress={() => {
+            let phoneNumber = String(item.creator.phone);
+            if (Platform.OS !== 'android') {
+              phoneNumber = `telprompt:${String(item.creator.phone)}`;
+            }
+            else {
+              phoneNumber = `tel:${String(item.creator.phone)}`;
+            }
+            Linking.canOpenURL(phoneNumber)
+              .then(supported => {
+                if (!supported) {
+                  Alert.alert('Phone number is not available '+phoneNumber);
+                } else {
+                  return Linking.openURL(phoneNumber);
+                }
+              })
+              .catch(err => console.log(err));
+          }} style={{ paddingVertical: 6, paddingHorizontal: 16, backgroundColor: '#1B77DF', borderRadius: 5 }}>
             <Text style={{ color: 'white' }}>Hubungi</Text>
           </TouchableOpacity>
         </View>
