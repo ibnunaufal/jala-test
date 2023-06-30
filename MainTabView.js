@@ -2,24 +2,14 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { useWindowDimensions } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-
 import Harga2 from './page/Harga2';
-const HargaRoute = () => (
-    <View style={{ flex: 1, backgroundColor: '#ff4081' }} />
-);
-
-const KabarRoute = () => (
-    <View style={{ flex: 1, backgroundColor: '#673ab7' }} />
-);
-
-const PenyakitRoute = () => (
-    <View style={{ flex: 1, backgroundColor: '#673a99' }} />
-);
+import Kabar from './page/Kabar';
+import Penyakit from './page/Penyakit';
 
 const renderScene = SceneMap({
     harga: Harga2,
-    kabar: KabarRoute,
-    penyakit: PenyakitRoute,
+    kabar: Kabar,
+    penyakit: Penyakit,
 });
 const renderTabBar = (props) => (
     <TabBar
