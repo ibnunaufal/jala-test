@@ -36,7 +36,7 @@ export default function App() {
   const renderTabBar = (props) => (
     <TabBar
       {...props}
-      indicatorStyle={{ backgroundColor: '#1B77DF' }}
+      indicatorStyle={{ backgroundColor: '#1B77DF', height: 4}}
       style={{ backgroundColor: 'white' }}
       renderLabel={({ route, focused, color }) => (
         <Text style={{ color: focused?'#1B77DF':'#737373' }}>
