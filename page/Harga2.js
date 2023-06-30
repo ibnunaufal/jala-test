@@ -6,6 +6,7 @@ import {
     BottomSheetBackdrop
 } from '@gorhom/bottom-sheet';
 import React, { useCallback, useMemo, useRef, useState } from 'react'
+import { useNavigation } from "@react-navigation/native";
 
 
 const element = (e) => {
@@ -1437,8 +1438,13 @@ export default function Harga2() {
 
     const priceFormat = (name) => { return name == "" ? "" : String(name).replace(/\B(?=(\d{3})+(?!\d))/g, ".") }
 
-    const renderItem = ({ item }) => (
-        <View style={{ borderRadius: 10, borderWidth: 1, padding: 10, margin: 14, borderColor: '#E5E5E5' }}>
+    const navigation = useNavigation();
+    const renderItem = ({ item }) => {
+        const handlePress = () => {
+            // Navigate to 'HargaDetail' screen and pass the 'item' object as a parameter
+            navigation.navigate('HargaDetail', { item });
+        };
+        return (<View style={{ borderRadius: 10, borderWidth: 1, padding: 10, margin: 14, borderColor: '#E5E5E5' }}>
             <View>
                 {/* Top */}
                 <View style={{ flexDirection: "row", justifyContent: 'space-between', display: 'flex' }}>
@@ -1475,15 +1481,15 @@ export default function Harga2() {
                         <Text style={{ fontSize: 22, fontWeight: 700 }}> IDR {priceFormat(item.size_100)} </Text>
                     </View>
                     <View style={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
-                        <TouchableOpacity style={{ backgroundColor: '#1B77DF', padding: 5, borderRadius: 5 }}>
+                        <TouchableOpacity onPress={handlePress} style={{ backgroundColor: '#1B77DF', padding: 5, borderRadius: 5 }}>
                             <Text style={{ color: 'white', fontWeight: 600 }}> Lihat Detail </Text>
                         </TouchableOpacity>
                     </View>
                 </View>
             </View>
         </View>
-    );
-
+        )
+    };
     // ref
     const bottomSheetModalRef = useRef();
 
@@ -1491,10 +1497,10 @@ export default function Harga2() {
     const snapPoints = useMemo(() => ['25%', '50%', '95%'], []);
 
     // callbacks
-    function initArray(){
+    function initArray() {
         let temp = []
         for (let i = 2; i < 21; i++) {
-            temp.push(i*10)
+            temp.push(i * 10)
         }
         setSizeArr(temp)
     }
@@ -1525,14 +1531,14 @@ export default function Harga2() {
     }, []);
     const handleSheetChanges = useCallback((index) => {
         console.log('handleSheetChanges', index);
-        if (index < 0){
+        if (index < 0) {
             setBottomSheetOpened(false)
         }
     }, []);
 
     return (
         <BottomSheetModalProvider style={{ flex: 1 }}>
-            <Text style={{ color: '#004492', fontSize: 18, fontWeight: 700, paddingHorizontal: 20, paddingTop: 15}}>Harga Terbaru</Text>
+            <Text style={{ color: '#004492', fontSize: 18, fontWeight: 700, paddingHorizontal: 20, paddingTop: 15 }}>Harga Terbaru</Text>
             <FlatList
                 data={data}
                 renderItem={renderItem}
@@ -1546,7 +1552,7 @@ export default function Harga2() {
                         </View>
                         <View style={{ flex: 2 }}>
                             <Text style={{ color: 'white' }}>Size</Text>
-                            <Text style={{ color: 'white', fontWeight: 700 }}>{ selectedSize }</Text>
+                            <Text style={{ color: 'white', fontWeight: 700 }}>{selectedSize}</Text>
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -1556,7 +1562,7 @@ export default function Harga2() {
                             <Image source={require('./../assets/location.svg')} style={{ width: 25, height: 25, marginRight: 5 }} />
                         </View>
                         <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ color: 'white', fontWeight: 700 }}>{ selectedRegion == "" ? "Indonesia" : selectedRegion }</Text>
+                            <Text style={{ color: 'white', fontWeight: 700 }}>{selectedRegion == "" ? "Indonesia" : selectedRegion}</Text>
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -1571,43 +1577,43 @@ export default function Harga2() {
                 }}
             >
                 {
-                    isSizeModal ? 
-                    <View style={{  }}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingVertical: 10, borderBottomColor: '#E9E9E9', borderBottomWidth: 1 }}>
-                            <Text style={{ fontWeight: 700 }}>Size</Text>
-                            <TouchableOpacity onPress={ handleCloseModalPress1 }>
-                                <Text style={{ color: '#1B77DF' }}>Tutup</Text>
-                            </TouchableOpacity>
+                    isSizeModal ?
+                        <View style={{}}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingVertical: 10, borderBottomColor: '#E9E9E9', borderBottomWidth: 1 }}>
+                                <Text style={{ fontWeight: 700 }}>Size</Text>
+                                <TouchableOpacity onPress={handleCloseModalPress1}>
+                                    <Text style={{ color: '#1B77DF' }}>Tutup</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <ScrollView>
+                                {
+                                    sizeArr.map((item) => {
+                                        return <TouchableOpacity key={item} onPress={() => { setSelectedSize(item); handleCloseModalPress1() }} style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
+                                            <Text>{item}</Text>
+                                        </TouchableOpacity>
+                                    })
+                                }
+                                <View style={{ height: 40 }}></View>
+                            </ScrollView>
+                        </View> :
+                        <View style={{}}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingVertical: 10, borderBottomColor: '#E9E9E9', borderBottomWidth: 1 }}>
+                                <Text style={{ fontWeight: 700 }}>Region</Text>
+                                <TouchableOpacity onPress={handleCloseModalPress2}>
+                                    <Text style={{ color: '#1B77DF' }}>Tutup</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <ScrollView>
+                                {
+                                    regionList.map((item) => {
+                                        return <TouchableOpacity key={item.id} onPress={() => { setSelectedRegion(item.full_name); handleCloseModalPress2() }} style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
+                                            <Text>{item.full_name}</Text>
+                                        </TouchableOpacity>
+                                    })
+                                }
+                                <View style={{ height: 40 }}></View>
+                            </ScrollView>
                         </View>
-                        <ScrollView>
-                            {
-                                sizeArr.map((item) => {
-                                    return <TouchableOpacity key={item} onPress={ () => { setSelectedSize(item); handleCloseModalPress1() } } style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
-                                        <Text>{item}</Text>
-                                    </TouchableOpacity>
-                                })
-                            }
-                            <View style={{ height:40 }}></View>
-                        </ScrollView>
-                    </View> :
-                    <View style={{  }}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingVertical: 10, borderBottomColor: '#E9E9E9', borderBottomWidth: 1 }}>
-                            <Text style={{ fontWeight: 700 }}>Region</Text>
-                            <TouchableOpacity onPress={ handleCloseModalPress2 }>
-                                <Text style={{ color: '#1B77DF' }}>Tutup</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <ScrollView>
-                            {
-                                regionList.map((item) => {
-                                    return <TouchableOpacity key={item.id} onPress={ () => { setSelectedRegion(item.full_name); handleCloseModalPress2() } } style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
-                                        <Text>{item.full_name}</Text>
-                                    </TouchableOpacity>
-                                })
-                            }
-                            <View style={{ height:40 }}></View>
-                        </ScrollView>
-                    </View>
                 }
             </BottomSheetModal>
         </BottomSheetModalProvider>

@@ -2,9 +2,13 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react'
 import { SafeAreaView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
 import Kabar from './page/Kabar';
 import Penyakit from './page/Penyakit';
 import Harga2 from './page/Harga2';
+import MainTabView from './MainTabView';
+import HargaDetail from './page/HargaDetail'
 
 const HargaRoute = () => (
   <View style={{ flex: 1, backgroundColor: '#ff4081' }} />
@@ -24,6 +28,8 @@ const renderScene = SceneMap({
   penyakit: Penyakit,
 });
 
+const Stack = createNativeStackNavigator();
+
 export default function App() {
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
@@ -33,33 +39,26 @@ export default function App() {
     { key: 'kabar', title: 'Kabar' },
     { key: 'penyakit', title: 'Penyakit' },
   ]);
-  const renderTabBar = (props) => (
-    <TabBar
-      {...props}
-      indicatorStyle={{ backgroundColor: '#1B77DF', height: 4}}
-      style={{ backgroundColor: 'white' }}
-      renderLabel={({ route, focused, color }) => (
-        <Text style={{ color: focused?'#1B77DF':'#737373' }}>
-          {route.title}
-        </Text>
-      )}
-    />
-  );
+  
 
   return (
-    <SafeAreaView style={{flex:1}}>
-      <StatusBar backgroundColor='#1B77DF' style='auto' />
-      <Text style={{ fontSize: 20, padding: 16, backgroundColor: '#1B77DF', color: 'white' }}>
-        Jala
-      </Text>
-      <TabView
-          navigationState={{index, routes}}
-          renderScene={renderScene}
-          onIndexChange={setIndex}
-          initialLayout={{width: layout.width}}
-          renderTabBar={renderTabBar}
-        />
-    </SafeAreaView>
+    <>
+      <SafeAreaView style={{flex:1}}>
+        <StatusBar backgroundColor='#1B77DF' style='auto' />
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: { backgroundColor: "#1B77DF" },
+              headerTintColor: "white",              
+              contentStyle: { backgroundColor: "white" },
+            }}
+          >
+            <Stack.Screen name='Main' component={MainTabView} options={{title:'Jala'}} />
+            <Stack.Screen name='HargaDetail' component={HargaDetail} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaView>
+    </>
   );
 }
 
