@@ -1532,6 +1532,7 @@ export default function Harga2() {
 
     return (
         <BottomSheetModalProvider style={{ flex: 1 }}>
+            <Text style={{ color: '#004492', fontSize: 18, fontWeight: 700, paddingHorizontal: 20, paddingTop: 15}}>Harga Terbaru</Text>
             <FlatList
                 data={data}
                 renderItem={renderItem}
