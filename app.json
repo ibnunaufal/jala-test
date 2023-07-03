@@ -20,11 +20,17 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#31A0E8"
+      },
+      "package": "com.ibnunaufal.jala"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f04ede70-e47d-4834-9cbf-eb7d5e222c58"
+      }
     }
   }
 }
